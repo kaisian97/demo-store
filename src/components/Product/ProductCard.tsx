@@ -11,7 +11,7 @@ type ProductCardProps = {
 const ProductCard = ({ product }: ProductCardProps) => {
   return (
     <Link to={`${ProductPage.path}/${product.id}`}>
-      <div className="bg-slate-100 rounded-lg text-center w-full p-4 h-[300px]">
+      <div className="bg-slate-100 rounded-lg text-center w-full p-4 h-[300px] hover:shadow transition">
         <div className="mix-blend-darken">
           <Image
             className="m-auto object-contain h-[200px] w-[200px]"

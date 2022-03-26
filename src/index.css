@@ -17,5 +17,5 @@ code {
 }
 
 .root-wrapper {
-  @apply max-w-screen-2xl m-auto;
+  @apply max-w-screen-2xl m-auto w-full;
 }

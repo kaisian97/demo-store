@@ -19,8 +19,8 @@ const NavBar = (props: NavBarProps) => {
   const iconClassName = "w-6 h-6 md:w-10 md:h-10";
 
   return (
-    <div className="sticky top-0 bg-white z-10 shadow">
-      <nav className="flex justify-between root-wrapper items-center px-4 py-2 ">
+    <div className="sticky top-0 bg-white z-10 h-14 sm:h-16 md:h-20 shadow">
+      <nav className="flex justify-between root-wrapper h-full items-center px-4 py-2 ">
         <MenuIcon className={iconClassName} />
         <Link to={Home.path}>Demo Store</Link>
         <Link to={Cart.path} title="Cart" className="relative">

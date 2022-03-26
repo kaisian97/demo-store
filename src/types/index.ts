@@ -11,6 +11,7 @@ export type Store = {
   name: string;
   value: string;
   currency: string;
+  code: string;
   secret: string;
   rate: number;
 };

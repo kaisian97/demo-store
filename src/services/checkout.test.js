@@ -1,35 +1,30 @@
 import { checkout } from "./checkout";
-import { rest } from "msw";
 import { setupServer } from "msw/node";
+import { checkoutApi, checkoutApiException } from "./handlers";
 
-const checkoutApiException = rest.post(
-  "https://api.uat.ablr.com/api/v2/public/merchant/checkout/",
-  async (req, res, ctx) => res.networkError("Custom network error message")
-);
+describe("checkout api", () => {
+  const handlers = [checkoutApiException, checkoutApi];
 
-const checkoutApi = rest.post("/checkout", async (req, res, ctx) =>
-  res(ctx.json({ checkout_url: "https://backend.uat.ablr.com" }))
-);
+  const server = setupServer(...handlers);
 
-const handlers = [checkoutApiException, checkoutApi];
+  beforeAll(() => server.listen());
+  afterEach(() => server.resetHandlers());
+  afterAll(() => server.close());
 
-const server = setupServer(...handlers);
+  it("should able to get checkout_url", async () => {
+    server.use(checkoutApi);
 
-it("should able to get checkout_url", () => {
-  return checkout({
-    amount: "100.00",
-  }).then((data) => {
-    expect(data.checkout_url).toBeTruthy();
+    const data = await checkout({
+      amount: "100.00",
+    });
+
+    expect(data.checkout_url).toEqual("https://backend.uat.ablr.com");
   });
-});
 
-it("should catch the error if checkout api fail", async () => {
-  server.listen();
-  server.use(checkoutApiException);
+  it("should catch the error if checkout api fail", async () => {
+    server.use(checkoutApiException);
 
-  const data = await checkout();
-  expect(data).toEqual(false);
-
-  server.resetHandlers();
-  server.close();
+    const data = await checkout();
+    expect(data).toEqual(false);
+  });
 });

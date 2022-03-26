@@ -7,15 +7,26 @@ import ProductPage from ".";
 import { PRODUCTS, STORES } from "constant";
 import { textContentMatcher } from "setupTests";
 import { formatPrice } from "utils";
+import { setupServer } from "msw/node";
+import { checkoutApi, checkoutApiException } from "services/handlers";
 
 describe("product details page", () => {
   const currentProduct = PRODUCTS[0];
+
+  const handlers = [checkoutApi, checkoutApiException];
+
+  const server = setupServer(...handlers);
+
+  beforeAll(() => server.listen());
 
   beforeEach(() => {
     const location = window.location;
     delete global.window.location;
     global.window.location = Object.assign({}, location);
   });
+
+  afterEach(() => server.resetHandlers());
+  afterAll(() => server.close());
 
   const renderComponent = ({ productId }) =>
     render(
@@ -73,6 +84,8 @@ describe("product details page", () => {
   });
 
   test("call checkout api and go to checkout url", async () => {
+    server.use(checkoutApi);
+
     renderComponent({ productId: currentProduct.id });
     const checkoutBtn = screen.getByText("Checkout now");
     fireEvent.click(checkoutBtn);

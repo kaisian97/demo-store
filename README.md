@@ -1,6 +1,6 @@
 # Getting Started with Demo Store
 
-[![codecov](https://codecov.io/gh/kaisian97/demo-ablr/branch/main/graph/badge.svg?token=VENGEHZRX4)](https://codecov.io/gh/kaisian97/demo-store)
+[![codecov](https://codecov.io/gh/kaisian97/demo-store/branch/main/graph/badge.svg?token=hAv46yYqeR)](https://codecov.io/gh/kaisian97/demo-store)
 
 <!-- ![check-code-coverage](https://img.shields.io/badge/code--coverage-100%25-brightgreen) -->
 
